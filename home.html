@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=EDGE"/>
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+		<title>Web 日本語能力試験</title>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+	</head>
+
+<body bgcolor="ccccc" class="aa">
+         <!-- <table border="1" align="center" bgColor="#aacc99"
+             style="height: 350px; width: 270px">
+             <tr>
+                 <td colspan="4">
+                     <input type="text" value="日本語練習問題"  readonly
+                         style="height: 90px; width: 390px; font-size: 50px" />
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                     <input type="button" value="course1" id="nummessege1" onclick="onclicknum(1)"
+                         style="height: 70px; width: 390px; font-size: 35px">
+                 </td>
+
+             </tr>
+             <tr>
+                 <td>
+                     <input type="button" value="コース2" id="nummessege2" onclick="onclicknum(2)"
+                         style="height: 70px; width: 390px; font-size: 35px">
+                 </td>
+
+             </tr>
+             <tr>
+                 <td>
+                     <input type="button" value="コース3" id="nummessege3" onclick="onclicknum(3)"
+                         style="height: 70px; width: 390px; font-size: 35px">
+                 </td>
+
+             </tr>
+              </table> -->
+  <div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<h3 class="text-left">
+				日本語能力試験
+			</h3>
+			<button class="btn btn-primary" type="button" value="course1" id="nummessege1" onclick="onclicknum(1)" style="float:left;">コース１</button><br><br>
+			 <button class="btn btn-primary" type="button" value="course2" id="nummessege2" onclick="onclicknum(2)"style="float:left;">コース２</button><br><br>
+			 <button class="btn btn-primary" type="button" value="course3" id="nummessege3" onclick="onclicknum(3)"style="float:left;">コース３</button><br><br>
+			 <button class="btn btn-primary" type="button" value="course4" id="nummessege4" onclick="onclicknum(4)"style="float:left;">コース４</button><br><br>
+			 <button class="btn btn-primary" type="button" value="course5" id="nummessege5" onclick="onclicknum(5)"style="float:left;">コース５</button><br><br>
+			 <button class="btn btn-primary" type="button" value="course6" id="nummessege6" onclick="onclicknum(6)"style="float:left;">コース６</button><br><br>
+			 <button class="btn btn-primary" type="button" value="course7" id="nummessege7" onclick="onclicknum(7)"style="float:left;">コース７</button><br><br>
+			 <button class="btn btn-primary" type="button" value="course8" id="nummessege8" onclick="onclicknum(8)"style="float:left;">コース８</button><br><br>
+			 <button class="btn btn-primary" type="button" value="course9" id="nummessege9" onclick="onclicknum(9)"style="float:left;">コース９</button><br><br>
+			 <button class="btn btn-primary" type="button" value="course10" id="nummessege10" onclick="onclicknum(10)"style="float:left;">コース10</button>
+		</div>
+	</div>
+</div>
+
+
+
+     </body>
+
+
+
+    <script type="text/javascript">
+
+     var cource;
+     var courcename;
+     var answerId
+
+     function onclicknum(nums) {
+
+    	 var A = "nummessege" + nums;
+    	 cource = document.getElementById(A);
+    	 courcename = cource.value;
+
+    	var dataParams = {"nummessege":courcename};
+    	  if (courcename != "")
+    	   {
+      		   $.ajax({
+     			    type : "post",
+     			    dataType : "text",
+     			    url : "/maven.springmvc.web/getData",
+     			    data:dataParams,
+     			   contentType: "application/x-www-form-urlencoded",
+     			    success : function(result) {
+     			    	answerId = "試験開始"
+     			    	alert(answerId);
+                        if (result = "come on i am ready"){
+     			    	window.location.href='http://localhost:8080/maven.springmvc.web/mvc2';
+     			    	}
+     			    }
+     			    });
+    	   }
+    	  //次の画面に遷移する
+    }
+     </script>
+</html>

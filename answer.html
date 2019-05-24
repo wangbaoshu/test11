@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=EDGE" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+	name="viewport">
+<title>Web 結果画面</title>
+<link rel="stylesheet"
+	href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+
+<body bgcolor="ccccc" class="aa">
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<h3 class="text-left" id="title" style="background:#000; color:#FFF;width:100px" th:text="試験問題"　></h3>
+			</div>
+		</div>
+	</div>
+
+	<div th:each="list,listStat:${list}">
+		<div>
+			<p th:text="${(listStat.count)+'. '+list.ChoiceTitle}"></p>
+			<input type="text" value="錯誤" th:id="${(listStat.count)+'judgment'}"
+				readonly="readonly"
+				style="float: right; border: none; outline: none; text-align: right; visibility: hidden;" />
+		</div>
+		<div>
+			<input type="checkbox" th:id="${(listStat.count)}"
+				onclick="onclicknum('1')" /> A.&nbsp;&nbsp;<span
+				th:id="${(listStat.count)+ 'answer1'}"
+				th:text="${#strings.arraySplit(list.ChoiceOption,',')[0]}"></span><br>
+			<input type="checkbox" th:id="${(listStat.count)}"
+				onclick="onclicknum(2)" /> B.&nbsp;&nbsp;<span
+				th:id="${(listStat.count)+ 'answer2'}"
+				th:text="${#strings.arraySplit(list.ChoiceOption,',')[1]}"></span><br>
+			<input type="checkbox" th:id="${(listStat.count)}"
+				onclick="onclicknum(3)" /> C.&nbsp;&nbsp;<span
+				th:id="${(listStat.count)+ 'answer3'}"
+				th:text="${#strings.arraySplit(list.ChoiceOption,',')[2]}"></span><br>
+			<input type="checkbox" th:id="${(listStat.count)}"
+				onclick="onclicknum(4)" /> D.&nbsp;&nbsp;<span
+				th:id="${(listStat.count)+ 'answer4'}"
+				th:text="${#strings.arraySplit(list.ChoiceOption,',')[3]}"></span>
+		</div>
+		<div>
+			    &nbsp;<span th:id="${(listStat.count)+ 'true'}"
+				th:text="${#strings.arraySplit(list.ChoiceOption,',')[list.ChoiceAnswer]}"
+				style="visibility: hidden;"></span>
+		</div>
+	</div>
+	<div class="span12">
+		<button class="btn btn-primary" type="button" onclick="onclickshow()">提出</button>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+
+/* var aaaa = [${list.size}]; */
+
+     function onclicknum(nums) {
+    	 var A= event.target.id;
+    	 var B = "answer" + nums;
+         var C = A + B;
+         var D = 'true'
+         var E = A + D;
+         var F = 'judgment';
+         var G = A + F;
+    	var answerNow = document.getElementById(C);
+    	var answerNow = answerNow.textContent;
+    	var answertrue = document.getElementById(E);
+    	var answertrue = answertrue.textContent;
+
+    	 if (answerNow ==answertrue){
+    		   var node = document.getElementById(G);
+    		    node.value = "正解";
+    		    node.style.color = "#00F"
+
+
+    	 }
+    	 else {
+    		 var node1 = document.getElementById(G);
+    		 node1.value = "錯誤";
+    		 node1.style.color = "#FF0000"
+    	 }
+
+
+    	}
+
+
+
+
+
+	function onclickshow() {
+
+		document.getElementById("title").textContent = "結果確認";
+		var dlall = document.getElementsByTagName('div');
+		var testlength = (dlall.length - 4) / 4;
+
+		for (i = 1; i <= testlength; i++) {
+
+			document.getElementById(i + "judgment").style.visibility = "visible";
+
+		}
+
+	}
+</script>
+
+
+</html>
