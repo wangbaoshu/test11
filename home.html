@@ -11,36 +11,6 @@
 	</head>
 
 <body bgcolor="ccccc" class="aa">
-         <!-- <table border="1" align="center" bgColor="#aacc99"
-             style="height: 350px; width: 270px">
-             <tr>
-                 <td colspan="4">
-                     <input type="text" value="日本語練習問題"  readonly
-                         style="height: 90px; width: 390px; font-size: 50px" />
-                 </td>
-             </tr>
-             <tr>
-                 <td>
-                     <input type="button" value="course1" id="nummessege1" onclick="onclicknum(1)"
-                         style="height: 70px; width: 390px; font-size: 35px">
-                 </td>
-
-             </tr>
-             <tr>
-                 <td>
-                     <input type="button" value="コース2" id="nummessege2" onclick="onclicknum(2)"
-                         style="height: 70px; width: 390px; font-size: 35px">
-                 </td>
-
-             </tr>
-             <tr>
-                 <td>
-                     <input type="button" value="コース3" id="nummessege3" onclick="onclicknum(3)"
-                         style="height: 70px; width: 390px; font-size: 35px">
-                 </td>
-
-             </tr>
-              </table> -->
   <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
@@ -70,17 +40,18 @@
     <script type="text/javascript">
 
      var cource;
-     var courcename;
+     var courceId;
      var answerId
+     var AAA
 
      function onclicknum(nums) {
 
     	 var A = "nummessege" + nums;
     	 cource = document.getElementById(A);
-    	 courcename = cource.value;
+    	 courceId = cource.value;
 
-    	var dataParams = {"nummessege":courcename};
-    	  if (courcename != "")
+    	var dataParams = {"nummessege":courceId};
+    	  if (courceId != "")
     	   {
       		   $.ajax({
      			    type : "post",
@@ -92,7 +63,8 @@
      			    	answerId = "試験開始"
      			    	alert(answerId);
                         if (result = "come on i am ready"){
-     			    	window.location.href='http://localhost:8080/maven.springmvc.web/mvc2';
+
+     			    	window.location.href="http://localhost:8080/maven.springmvc.web/mvc2?courceId="+courceId+"";
      			    	}
      			    }
      			    });
