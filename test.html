@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>日本語テスト</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-jtemplates.js"></script>
+<style type="text/css">
+    .container{
+        width: 70%;
+        margin: 0 auto;
+    }
+    .template{
+        display: none;
+    }
+    
+    .fixedLayer h2{        
+		padding:10px;
+		border:#73AFD0;
+		border-width: 0 0 1px 0;
+		background-color:#A3CBE0;
+	}
+	
+
+    .div_topic.odd{background-color: #FFEBD7;}
+    
+    .div_topic{
+		padding:10px;
+		border:#73AFD0 dashed;
+		border-width: 0 0 1px 0;
+		background-color:#F9FCFD;
+	}
+	
+	.btn {
+		border: 1px solid #15aeec;
+		background-color: #49c0f0;
+		background-image: -webkit-linear-gradient(top, #49c0f0, #2cafe3);
+		background-image: linear-gradient(to bottom, #49c0f0, #2cafe3);
+		border-radius: 4px;
+		color: #fff;
+		line-height: 22px;
+		width: 80px;
+		-webkit-transition: none;
+		transition: none;
+		width:90px;
+		height:35px;
+	}
+
+	.btn:hover {
+		border:1px solid #1090c3;
+		background-color: #1ab0ec;
+		background-image: -webkit-linear-gradient(top, #1ab0ec, #1a92c2);
+		background-image: linear-gradient(to bottom, #1ab0ec, #1a92c2);
+		cursor: pointer;
+	}
+
+	.btn:active {
+		background: #1a92c2;
+		box-shadow: inset 0 3px 5px rgba(0, 0, 0, .2);
+		color: #1679a1;
+	}
+	
+	.div_a{ float:right; width:200px; height:50px;}
+	
+    
+</style>
+    
+<script type="text/javascript">
+   
+    	$(window).load(function() {
+    		
+    	   /*
+	        var data = [
+		        {
+		            "choiceTitle" : "青い の平仮名:__",
+		            "choiceAnswer" : "2",
+		            "choiceType" : "0",
+		            "choiceOptiontemp":[
+		               {"id":"11","name":"あかい"},
+		               {"id":"12","name":"あおい"},
+		               {"id":"13","name":"ちおい"}
+		            ]
+		                         
+		        },
+		        {
+		            "choiceTitle" : "青い の平仮名1:__",
+		            "choiceAnswer" : "2",
+		            "choiceType" : "0",
+		            "choiceOptiontemp":[
+		               {"id":"21","name":"あかい1"},
+		               {"id":"22","name":"あおい2"},
+		               {"id":"23","name":"ちおい3"}
+		            ]
+		        }
+	        ];
+	        $("#result").setTemplateElement("template");
+	        $("#result").processTemplate(data);
+	        */
+	        
+	        
+	        $("#return").hide();
+		    $("#clear").hide();
+		    $("#show").hide();
+				   
+	        var thisURL = document.URL; 
+			var getval =thisURL.split('?')[1]; 
+			var codes= getval.split("=")[1]; 
+		
+		
+	        var url = "http://192.168.100.23:8080/getQChoiceById/" + codes;
+	        $.ajax({
+				async: true,
+				cache : false,
+				type : 'POST',
+				dataType : 'json',
+				contentType : 'application/json',
+				url:url,
+				success:function(data)
+				{
+				   
+			       $("#result").setTemplateElement("template");
+	        	   $("#result").processTemplate(data);
+	        	   
+	        	   $("#return").hide();
+				   $("#clear").show();
+				   $("#show").show();
+	        	   
+				},
+				error:function()
+				{
+				   alert("通信エラー");
+				}
+			});
+			
+			onKeyOff();
+			
+    	});
+    	
+    	function onKeyOff(){
+	        document.onkeydown = function () {
+	            if (window.event && window.event.keyCode == 123) {
+	                event.keyCode = 0;
+	                event.returnValue = false;
+	                return false;
+	            }
+	        };
+    	}
+    
+    
+   function onclicknum0(nums) {
+    	 var A= event.target.id;
+    	 var B = "answer" + nums;
+         var C = A + B;
+         var D = 'true'
+         var E = A + D;
+         var F = 'judgment';
+         var G = A + F;
+
+    	var answerNow = document.getElementById(C);
+    	var answerNow = answerNow.accessKey;
+    /* 	var idNow  =answerNow.id; */
+    	var answertrue = document.getElementById(E);
+    	var answertrue = answertrue.accessKey;
+     	 var url = location.search;
+
+    	 if (url.indexOf("?") != -1) {
+	    	 var str = url.substr(1);
+	    	 var aaa = decodeURIComponent(str.replace("AAA=",""));
+    	 }
+
+    	 //現行　現行の答案と基準の答案を比較する
+    	 if (answerNow ==answertrue){
+    		   var node1 = document.getElementById(G);
+    		    node1.value = "正解";
+    		    node1.style.color = "#00F"
+
+
+    	 }
+    	 else {
+    		 var node2 = document.getElementById(G);
+    		 node2.value = "錯誤";
+    		 node2.style.color = "#FF0000"
+    	 }
+
+
+    	}
+
+     function onclicknum1(nums) {
+    	 var A= event.target.id;
+    	 var B = "answer" + nums;
+         var C = A + B;
+         var D = 'true'
+         var E = A + D;
+         var F = 'judgment';
+         var G = A + F;
+
+    	var answerNow = document.getElementById(C);
+    	var answerNow = answerNow.accessKey;
+    	var answertrue = document.getElementById(E);
+    	var answertrue = answertrue.accessKey;
+    	var checkedFlag= event.target.checked;
+
+    	if (checkedFlag == true){
+    		document.cookie = document.cookie+answerNow;
+        	answerNow  = document.cookie;
+    	}
+
+    	else{
+    		document.cookie = document.cookie.replace(answerNow,"");
+    		answerNow  = document.cookie;
+    	}
+
+        if (answerNow.length == answertrue.length){
+
+        	for (i=0;i<answerNow.length;i++){
+        	if(answertrue.indexOf(answerNow[i])!=-1){
+        	}
+         	 else {
+           		 var node2 = document.getElementById(G);
+           		 node2.value = "錯誤";
+           		 node2.style.color = "#FF0000"
+           	 }
+        	}
+        }
+	   	 else {
+	   		 var node2 = document.getElementById(G);
+	   		 node2.value = "錯誤";
+	   		 node2.style.color = "#FF0000"
+	   	 }
+    	}
+
+		function onclickshow() {
+
+			
+			var node3 = document.getElementById("count");
+			var questionsLong= node3.value;
+
+			//ああ提出ボタンを押すと、radioが失効する
+
+			for (i=1; i<=node3.value; i++){
+				var node4 = document.getElementsByName(i+"name");
+				for(j=0; j<node4.length; j++){
+				node4[j].disabled="true";
+			    }
+			}
+
+			var cnt;
+			cnt = 0;
+			//答えは正確か錯誤か見えるようにする
+			for (i = 1; i <= questionsLong; i++) {
+				document.getElementById(i + "judgment").style.visibility = "visible";
+				if (document.getElementById(i + "judgment").value == "正解"){
+					cnt++;
+				}
+			}
+			var str1;
+		    var str = Number(cnt/10*100).toFixed();
+		    str+="%";
+		    if (cnt>5){
+		       str1 = '合格!!'
+		       $("#title").css("background-color", "#98FB98");
+		    }else{
+		       str1 = '不合格!!'
+		    }
+		    
+		    var txt = "結果確認：" + "　　" + str + "（" +str1 + "）";
+		    $("#title").text(txt);
+		    
+			$(window).scrollTop(0);
+			
+			$("#return").show();
+			$("#clear").hide();
+			$("#show").hide();
+		}
+		
+		
+		function onReturn(flg){
+		   if (flg == "clear"){
+		      var r = confirm("キャンセルしますか？");
+		      if (r == false){
+		        return;
+		      }
+		   }
+		   
+		   window.location.href="home.html";
+		}
+		
+</script>
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart ="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false" onmouseup="document.selection.empty()">
+    <div class="container">
+        <div>
+			<div>
+				<div class="fixedLayer">
+					<h2 id="title">試験問題</h3>
+				</div>
+			</div>
+		</div>
+			
+        <div id="result"></div>
+        <textarea id="template" class="template">
+
+			{#if $T != null && $T.length > 0}               
+
+				<input type="text" id="count" value="{$T.length}" style="visibility: hidden;"/>
+	
+                   {#for i = 0 to $T.length-1}
+                   
+                      <div class="div_topic.odd">
+                          {$T.i+1}.{$T[$T.i].choiceTitle}
+                          <input type="text" value="錯誤" id="{$T.i+1}judgment"
+                                readonly="readonly"
+								style="float: right; border: none; outline: none; text-align: right;visibility: hidden;color:#FF0000" />
+                      </div>
+                      
+                      <div class="div_topic">
+                      
+                      {#if $T[$T.i].choiceType == "0"}
+                       <span>(単選)</span><br>
+                          {#for j = 0 to $T[$T.i].choiceOptiontemp.length-1}
+                              
+                                <input type="radio" id="{$T.i+1}"
+									onclick="onclicknum0({$T.j+1})" name = "{$T.i+1}name"/>
+								<span id="{$T.i+1}answer{$T.j+1}">
+								  {$T[$T.i].choiceOptiontemp[$T.j].id}.&nbsp;&nbsp;{$T[$T.i].choiceOptiontemp[$T.j].value}
+								</span><br>
+			                  
+							  
+                          {#/for}
+                          
+						  <div>
+							 &nbsp;<span id="{$T.i+1}true" style="visibility: hidden;">{$T[$T.i].choiceAnswer}</span>
+						  </div> 
+                          
+                      {#else}
+                      	  <span>(多選)</span><br>
+                      	  {#for j = 0 to $T[$T.i].choiceOptiontemp.length-1}
+                              <div>
+	                              <input type="checkbox" id="{$T.i+1}"
+										onclick="onclicknum1({$T.j+1})" name = "{$T.i+1}name"/>
+									<span id="{$T.i+1}answer{$T.j+1}">
+									  {$T[$T.i].choiceOptiontemp[$T.j].id}.&nbsp;&nbsp;{$T[$T.i].choiceOptiontemp[$T.j].value}
+									</span><br>
+									
+			                  </div>
+							  
+                          {#/for}
+                          
+                          <div>
+							 &nbsp;<span id="{$T.i+1}true" style="visibility: hidden;">{$T[$T.i].choiceAnswer.replace(",","")}</span>
+						  </div>
+                          
+                      {#/if}
+                      </div>
+                         
+                      
+                   {#/for}
+               {#/if}
+           
+            <br>
+	        
+        </textarea>
+        <div class = "div_a">
+            <button class = "btn" type="button" id = "clear" onclick="onReturn('clear')">キャンセル</button>
+			<button class = "btn" type="button" id = "show" onclick="onclickshow()">送信する</button>
+			<button class = "btn" type="button" id = "return" onclick="onReturn('return')">コース戻る</button>
+	    </div>
+    </div>
+</body>
+</html>

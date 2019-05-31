@@ -1,75 +1,148 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=EDGE"/>
-		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
-		<title>Web 日本語能力試験</title>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-	</head>
-
-<body bgcolor="ccccc" class="aa">
-  <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="span12">
-			<h3 class="text-left">
-				日本語能力試験
-			</h3>
-			<button class="btn btn-primary" type="button" value="course1" id="nummessege1" onclick="onclicknum(1)" style="float:left;">コース１</button><br><br>
-			 <button class="btn btn-primary" type="button" value="course2" id="nummessege2" onclick="onclicknum(2)"style="float:left;">コース２</button><br><br>
-			 <button class="btn btn-primary" type="button" value="course3" id="nummessege3" onclick="onclicknum(3)"style="float:left;">コース３</button><br><br>
-			 <button class="btn btn-primary" type="button" value="course4" id="nummessege4" onclick="onclicknum(4)"style="float:left;">コース４</button><br><br>
-			 <button class="btn btn-primary" type="button" value="course5" id="nummessege5" onclick="onclicknum(5)"style="float:left;">コース５</button><br><br>
-			 <button class="btn btn-primary" type="button" value="course6" id="nummessege6" onclick="onclicknum(6)"style="float:left;">コース６</button><br><br>
-			 <button class="btn btn-primary" type="button" value="course7" id="nummessege7" onclick="onclicknum(7)"style="float:left;">コース７</button><br><br>
-			 <button class="btn btn-primary" type="button" value="course8" id="nummessege8" onclick="onclicknum(8)"style="float:left;">コース８</button><br><br>
-			 <button class="btn btn-primary" type="button" value="course9" id="nummessege9" onclick="onclicknum(9)"style="float:left;">コース９</button><br><br>
-			 <button class="btn btn-primary" type="button" value="course10" id="nummessege10" onclick="onclicknum(10)"style="float:left;">コース10</button>
-		</div>
-	</div>
-</div>
-
-
-
-     </body>
-
-
-
-    <script type="text/javascript">
-
-     var cource;
-     var courceId;
-     var answerId
-     var AAA
-
-     function onclicknum(nums) {
-
-    	 var A = "nummessege" + nums;
-    	 cource = document.getElementById(A);
-    	 courceId = cource.value;
-
-    	var dataParams = {"nummessege":courceId};
-    	  if (courceId != "")
-    	   {
-      		   $.ajax({
-     			    type : "post",
-     			    dataType : "text",
-     			    url : "/maven.springmvc.web/getData",
-     			    data:dataParams,
-     			   contentType: "application/x-www-form-urlencoded",
-     			    success : function(result) {
-     			    	answerId = "試験開始"
-     			    	alert(answerId);
-                        if (result = "come on i am ready"){
-
-     			    	window.location.href="http://localhost:8080/maven.springmvc.web/mvc2?courceId="+courceId+"";
-     			    	}
-     			    }
-     			    });
-    	   }
-    	  //次の画面に遷移する
+<!DOCTYPE html>
+<html> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>日本語テスト</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-jtemplates.js"></script>
+<style type="text/css">
+    .container{
+        width:60%;
+        margin: 0 auto;
     }
-     </script>
+    .template{
+        display: none;
+    }
+    
+    .fixedLayer h2{        
+		padding:10px;
+		border:#73AFD0;
+		border-width: 0 0 1px 0;
+		background-color:#A3CBE0;
+	}
+
+    .div_topic.odd{background-color: #FFEBD7;}
+    
+    .div_topic{
+		padding:10px;
+		border:#73AFD0 dashed;
+		border-width: 0 0 1px 0;
+		background-color:#F9FCFD;
+	}
+	
+	.btn {
+		border: 1px solid #15aeec;
+		background-color: #49c0f0;
+		background-image: -webkit-linear-gradient(top, #49c0f0, #2cafe3);
+		background-image: linear-gradient(to bottom, #49c0f0, #2cafe3);
+		border-radius: 4px;
+		color: #fff;
+		line-height: 22px;
+		width: 80px;
+		-webkit-transition: none;
+		transition: none;
+		width:90px;
+		height:35px;
+	}
+
+	.btn:hover {
+		border:1px solid #1090c3;
+		background-color: #1ab0ec;
+		background-image: -webkit-linear-gradient(top, #1ab0ec, #1a92c2);
+		background-image: linear-gradient(to bottom, #1ab0ec, #1a92c2);
+		cursor: pointer;
+	}
+
+	.btn:active {
+		background: #1a92c2;
+		box-shadow: inset 0 3px 5px rgba(0, 0, 0, .2);
+		color: #1679a1;
+	}
+
+	
+    
+</style>
+    
+<script type="text/javascript">
+   
+    	$(window).load(function() {
+	       
+	       
+	        var url = "http://192.168.100.23:8080/getQLevel/";
+	        $.ajax({
+				async: true,
+				cache : false,
+				type : 'POST',
+				dataType : 'json',
+				contentType : 'application/json',
+				url:url,
+				success:function(data)
+				{
+			       $("#result").setTemplateElement("template");
+	        	   $("#result").processTemplate(data);
+				},
+				error:function()
+				{
+				   alert("通信エラー");
+				}
+			});
+			
+			onKeyOff();
+			
+			/*
+			//test
+			var data = [{"levelName":"低級","levelId":"A"},{"levelName":"中級","levelId":"B"},{"levelName":"高級","levelId":"C"}];
+			$("#result").setTemplateElement("template");
+	        $("#result").processTemplate(data);
+			
+			*/
+
+    	});
+
+	    function onKeyOff(){
+	        document.onkeydown = function () {
+	            if (window.event && window.event.keyCode == 123) {
+	                event.keyCode = 0;
+	                event.returnValue = false;
+	                return false;
+	            }
+	        };
+    	}
+    	
+		function onReturn(flg){
+		   var url;
+		   url = "test.html?name="+flg+"";
+		   window.location.href=url;
+		}
+		
+</script>
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart ="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false" onmouseup="document.selection.empty()">
+    <div class="container">
+        <div>
+			<div>
+				<div>
+					<h2 id="title">コース選択</h3>
+				</div>
+			</div>
+		</div>
+	
+		
+		<div id="result"></div>
+        <textarea id="template" class="template">
+            <div>
+                <table>
+                    {#foreach $T as record}
+                    <tr>
+						<td>
+						   <button class = "btn" type="button" onclick="onReturn('{$T.record.levelId}')">{$T.record.levelName}</button>
+						</td>
+                    </tr>
+                    {#/for}
+                </table>
+            </div>
+        </textarea>
+        
+    </div>
+</body>
 </html>
